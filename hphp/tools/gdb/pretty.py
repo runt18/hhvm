@@ -371,7 +371,7 @@ def lookup_function(val):
 
     # Get the type name.
     typename = t.tag
-    if typename == None:
+    if typename is None:
         return None
 
     # Iterate over local dict of types to determine if a printer is registered
