@@ -87,7 +87,7 @@ def parse_branches(raw_branches):
     for raw_branch in raw_branches:
         result = re.match(Branch.pattern, raw_branch)
         if result is None:
-            raise RuntimeError("Invalid branch format: %s" % raw_branch)
+            raise RuntimeError("Invalid branch format: {0!s}".format(raw_branch))
         name = result.group(1)
         if result.group(2) is None:
             branches.append(Branch(name))
@@ -154,8 +154,8 @@ def run_benchmarks(
     """
     benchy_path = config.HARNESS_PATH
 
-    suite_str = ' '.join(["--suite %s" % s for s in suites])
-    benchmark_str = ' '.join(["--benchmark %s" % b for b in benchmarks])
+    suite_str = ' '.join(["--suite {0!s}".format(s) for s in suites])
+    benchmark_str = ' '.join(["--benchmark {0!s}".format(b) for b in benchmarks])
     perf_str = '--perf' if run_perf else ''
     warmup_str = '' if warmup is None else '--warmup {0}'.format(warmup)
     inner_str = '' if inner is None else '--inner {0}'.format(inner)
@@ -185,7 +185,7 @@ def process_results(branches, output_mode):
 
     for branch in branches:
         counter += 1
-        runlog = os.path.join(config.WORK_DIR, "runlog.%d" % counter)
+        runlog = os.path.join(config.WORK_DIR, "runlog.{0:d}".format(counter))
         result_path = os.path.join(config.WORK_DIR, branch.result_file())
         with open(result_path, 'w') as result_file:
             cmd = "{anymean} --geomean {runlog}"

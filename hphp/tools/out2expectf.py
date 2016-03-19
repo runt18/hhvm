@@ -15,21 +15,21 @@ root_re = re.escape(root)
 
 for test in sys.argv[1:]:
     if not test.endswith('.php'):
-        print("%s doesn\'t end in .php. Pass the .php file to this script." %
-               test)
+        print("{0!s} doesn\'t end in .php. Pass the .php file to this script.".format(
+               test))
         sys.exit(1)
 
     try:
         data = open(test + '.out').read()
     except IOError:
-        print("%s.out doesn't exist, skipping" % test)
+        print("{0!s}.out doesn't exist, skipping".format(test))
         continue
 
     try:
         # the first match has to be in a try incase there is bad unicode
         re.sub('a', r'a', data)
     except UnicodeDecodeError:
-        print("%s has invalid unicode, skipping" % test)
+        print("{0!s} has invalid unicode, skipping".format(test))
         continue
 
     # try to do relative paths
@@ -63,4 +63,4 @@ for test in sys.argv[1:]:
         name = test + '.expect'
 
     open(name, 'w').write(data)
-    print('Copied %s.out to %s' % (test, name))
+    print('Copied {0!s}.out to {1!s}'.format(test, name))

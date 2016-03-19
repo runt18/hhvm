@@ -1089,7 +1089,7 @@ def walk(filename, dest_subdir):
 
         return
 
-    print("Importing %s" % full_dest_filename)
+    print("Importing {0!s}".format(full_dest_filename))
 
     def split(pattern, str):
         return re.split(r'\n\s*--'+pattern+'--\s*\n', str, 1)
@@ -1113,7 +1113,7 @@ def walk(filename, dest_subdir):
     unsupported_sections = ('POST_RAW')
     for name in unsupported_sections:
         if name in sections:
-            print("Unsupported test with section --%s--: " % name, filename)
+            print("Unsupported test with section --{0!s}--: ".format(name), filename)
             return
 
     if not 'FILE' in sections:
@@ -1646,15 +1646,15 @@ def walk(filename, dest_subdir):
 
         for t, t_replace_config in replace_configs.items():
             for i, replace_id in enumerate(t_replace_config.get(testname, [])):
-                new_id = 'test_%s_%s_%d' % (testname, t, i + 1)
+                new_id = 'test_{0!s}_{1!s}_{2:d}'.format(testname, t, i + 1)
                 if isinstance(replace_id, str):
                     test = test.replace(replace_id, new_id)
                 else:
                     test = replace_id.sub(new_id, test)
 
-        new_id = 'test_%s_table_1' % (testname, )
+        new_id = 'test_{0!s}_table_1'.format(testname )
         test = re.sub('(require(_once)*[ (][\'"](clean_)?table.inc[\'"]\)?)',
-                      '$test_table_name = \'%s\'; \\1' % (new_id, ), test)
+                      '$test_table_name = \'{0!s}\'; \\1'.format(new_id ), test)
 
     open(full_dest_filename, 'w').write(test)
 

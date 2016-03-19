@@ -268,7 +268,7 @@ class InfoAsioCommand(gdb.Command):
         asio_ctx = asio_context()
 
         # Count the number of contexts, and print the topmost.
-        print('\n%d stacked AsioContext%s (current: (%s) %s)' % (
+        print('\n{0:d} stacked AsioContext{1!s} (current: ({2!s}) {3!s})'.format(
             int(num_contexts),
             plural_suffix(num_contexts),
             str(asio_ctx.type),
@@ -291,7 +291,7 @@ class InfoAsioCommand(gdb.Command):
 
         wh = fp['m_this'].cast(wh_ptype)
 
-        print('\nCurrently %s WaitHandle: (%s) %s [state: %s]' % (
+        print('\nCurrently {0!s} WaitHandle: ({1!s}) {2!s} [state: {3!s}]'.format(
             'joining' if i == 0 else 'executing',
             str(wh.type),
             str(wh),
@@ -299,11 +299,11 @@ class InfoAsioCommand(gdb.Command):
 
         # Dump the async stacktrace.
         for s in frame.stringify_stacktrace(asio_stacktrace(wh)):
-            print('    %s' % s)
+            print('    {0!s}'.format(s))
 
         # Count the number of queued runnables.
         queue_size = sizeof(asio_ctx['m_runnableQueue'])
-        print('%d other resumable%s queued' % (
+        print('{0:d} other resumable{1!s} queued'.format(
             int(queue_size),
             plural_suffix(queue_size)))
 
@@ -315,9 +315,9 @@ class InfoAsioCommand(gdb.Command):
 
         # Count sleep and external thread events.
         print('')
-        print('%d pending sleep event%s' % (
+        print('{0:d} pending sleep event{1!s}'.format(
             int(num_sleeps), plural_suffix(num_sleeps)))
-        print('%d pending external thread event%s' % (
+        print('{0:d} pending external thread event{1!s}'.format(
             int(num_externals), plural_suffix(num_externals)))
 
         # Dump sleep and external thread event stacktraces.
@@ -326,17 +326,17 @@ class InfoAsioCommand(gdb.Command):
                 wh = idx.vector_at(vec, i)
                 stacktrace = frame.stringify_stacktrace(asio_stacktrace(wh, 3))
 
-                print('\n(%s) %s [state: %s]' % (
+                print('\n({0!s}) {1!s} [state: {2!s}]'.format(
                     str(wh.type), str(wh), WaitHandle(wh).state_str()))
 
                 if len(stacktrace) == 4:
                     for s in stacktrace[0:-1]:
-                        print('    %s' % s)
+                        print('    {0!s}'.format(s))
                     print('     ...')
-                    print('    %s' % stacktrace[-1])
+                    print('    {0!s}'.format(stacktrace[-1]))
                 else:
                     for s in stacktrace:
-                        print('    %s' % s)
+                        print('    {0!s}'.format(s))
         print('')
 
 InfoAsioCommand()

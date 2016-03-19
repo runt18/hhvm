@@ -19,7 +19,7 @@ def _print_horizontal_line(max_widths):
     """
     for width in max_widths:
         dashes = '-' * width
-        sys.stdout.write("%s---" % dashes)
+        sys.stdout.write("{0!s}---".format(dashes))
     sys.stdout.write('-\n')
 
 def _print_entry_centered(entry, width):
@@ -29,7 +29,7 @@ def _print_entry_centered(entry, width):
     total_padding = width - _len_sans_ansi(entry)
     front_padding = ' ' * (total_padding // 2)
     back_padding = ' ' * (total_padding - len(front_padding))
-    sys.stdout.write("%s%s%s" % (front_padding, entry, back_padding))
+    sys.stdout.write("{0!s}{1!s}{2!s}".format(front_padding, entry, back_padding))
 
 def _print_entry_left(entry, width, filler=' '):
     """Prints a table entry left justified within its cell.
@@ -37,7 +37,7 @@ def _print_entry_left(entry, width, filler=' '):
     """
     total_padding = width - _len_sans_ansi(entry)
     back_padding = filler * total_padding
-    sys.stdout.write("%s%s" % (entry, back_padding))
+    sys.stdout.write("{0!s}{1!s}".format(entry, back_padding))
 
 def _len_sans_ansi(text):
     """Computes the length of a string that might contain ANSI codes.
@@ -89,7 +89,7 @@ class Table(object):
         elif out_format == 'json':
             self.dump_to_json()
         else:
-            raise RuntimeError("Unknown output format: %s" % out_format)
+            raise RuntimeError("Unknown output format: {0!s}".format(out_format))
 
     def dump_to_json(self):
         """Print the table in JSON format. The printed value will be an array

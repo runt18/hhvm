@@ -95,15 +95,15 @@ class TypedValuePrinter(object):
             val = data['pref'].dereference()
 
         else:
-            t = 'Invalid(%d)' % t.cast(T('int8_t'))
-            val = "0x%x" % data['num']
+            t = 'Invalid({0:d})'.format(t.cast(T('int8_t')))
+            val = "0x{0:x}".format(data['num'])
 
         if val is None:
-            out = '{ %s }' % t
+            out = '{{ {0!s} }}'.format(t)
         elif name is None:
-            out = '{ %s, %s }' % (t, str(val))
+            out = '{{ {0!s}, {1!s} }}'.format(t, str(val))
         else:
-            out = '{ %s, %s ("%s") }' % (t, str(val), name)
+            out = '{{ {0!s}, {1!s} ("{2!s}") }}'.format(t, str(val), name)
 
         return out
 
@@ -123,8 +123,8 @@ class PtrPrinter(object):
     def to_string(self):
         s = self._string()
 
-        out = '(%s) %s'  % (str(self._ptype()), str(self._pointer()))
-        return '%s "%s"' % (out, s) if s is not None else out
+        out = '({0!s}) {1!s}'.format(str(self._ptype()), str(self._pointer()))
+        return '{0!s} "{1!s}"'.format(out, s) if s is not None else out
 
 
 class ReqPtrPrinter(PtrPrinter):
@@ -195,7 +195,7 @@ class ArrayDataPrinter(object):
                 raise StopIteration
 
             elt = self.cur
-            key = '%d' % self.count
+            key = '{0:d}'.format(self.count)
 
             try:
                 data = elt.dereference()
@@ -221,9 +221,9 @@ class ArrayDataPrinter(object):
                 if elt['data']['m_type'] == -1:
                     key = '<deleted>'
                 elif elt['data']['m_aux']['u_hash'] < 0:
-                    key = '%d' % elt['ikey']
+                    key = '{0:d}'.format(elt['ikey'])
                 else:
-                    key = '"%s"' % string_data_val(elt['skey'].dereference())
+                    key = '"{0!s}"'.format(string_data_val(elt['skey'].dereference()))
             except gdb.MemoryError:
                 key = '<invalid>'
 
@@ -251,16 +251,16 @@ class ArrayDataPrinter(object):
         kind_int = int(self.kind.cast(T('uint8_t')))
 
         if kind_int > 9:
-            return 'Invalid ArrayData (kind=%d)' % kind_int
+            return 'Invalid ArrayData (kind={0:d})'.format(kind_int)
 
         if self.kind == self._kind('Proxy'):
-            return 'ProxyArray { %s }' % (
+            return 'ProxyArray {{ {0!s} }}'.format((
                 self.val['m_ref'].dereference()['m_tv']
-                        ['m_data']['parr'].dereference())
+                        ['m_data']['parr'].dereference()))
 
         kind = str(self.kind)[len('HPHP::ArrayData::'):]
 
-        return "ArrayData[%s]: %d element(s) refcount=%d" % (
+        return "ArrayData[{0!s}]: {1:d} element(s) refcount={2:d}".format(
             kind,
             self.val['m_size'],
             self.val['m_hdr']['count']
@@ -322,7 +322,7 @@ class ObjectDataPrinter(object):
         self.cls = deref(val['m_cls'])
 
     def to_string(self):
-        return 'Object of class "%s" @ %s' % (
+        return 'Object of class "{0!s}" @ {1!s}'.format(
             nameof(self.cls),
             self.val.address)
 
@@ -340,7 +340,7 @@ class RefDataPrinter(object):
         self.val = val
 
     def to_string(self):
-        return "RefData { %s }" % self.val['m_tv']
+        return "RefData {{ {0!s} }}".format(self.val['m_tv'])
 
 
 #------------------------------------------------------------------------------

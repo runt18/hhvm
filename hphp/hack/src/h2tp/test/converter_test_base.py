@@ -34,11 +34,11 @@ class ConverterTestCase(unittest.TestCase):
             return
         (success, in_res) = in_eng.execute_file(in_file)
         if not success:
-            msg = "error executing file %s \n" % in_file
+            msg = "error executing file {0!s} \n".format(in_file)
             self.fail(msg + in_res)
         (success, out_res) = out_eng.execute_file(out_file)
         if not success:
-            msg = "error executing file %s \n" % out_file
+            msg = "error executing file {0!s} \n".format(out_file)
             self.fail(msg + out_res)
         if (in_res != out_res):
             message = ''.join(difflib.unified_diff(
@@ -143,7 +143,7 @@ class ConverterTestCase(unittest.TestCase):
             with open(out_path, "r") as f:
                 expected_output = f.read()
         except IOError:
-            self.fail("Expected output %s not provided/readable" % out_path)
+            self.fail("Expected output {0!s} not provided/readable".format(out_path))
         expected_output = self.normalize(
             Template(expected_output).safe_substitute(filename=in_path))
         actual_output = self.normalize(actual_output)

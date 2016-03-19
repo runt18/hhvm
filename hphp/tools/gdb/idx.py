@@ -307,7 +307,7 @@ If `container' is of a recognized type (e.g., native arrays, std::vector),
             print('idx: Element not found.')
             return None
 
-        gdb.execute('print *(%s)%s' % (
+        gdb.execute('print *({0!s}){1!s}'.format(
             str(value.type.pointer()), str(value.address)))
 
 

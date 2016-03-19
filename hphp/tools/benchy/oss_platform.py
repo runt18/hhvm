@@ -33,7 +33,7 @@ class Platform(object):
         This function will always be invoked prior to building a branch.
 
         """
-        utils.run_command('git checkout %s' % branch.name)
+        utils.run_command('git checkout {0!s}'.format(branch.name))
 
     def build_branch(self, branch):
         """Builds the specified branch.
@@ -46,7 +46,7 @@ class Platform(object):
         try:
             print(build_dir)
             os.chdir(build_dir)
-            utils.run_command('cmake %s' % config.SRCROOT_PATH)
-            utils.run_command('make -j%d' % multiprocessing.cpu_count())
+            utils.run_command('cmake {0!s}'.format(config.SRCROOT_PATH))
+            utils.run_command('make -j{0:d}'.format(multiprocessing.cpu_count()))
         finally:
             os.chdir(before_dir)

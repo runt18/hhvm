@@ -41,7 +41,7 @@ def set(repo_id, path):
 
 
 def table(prefix):
-    return '%s_%s' % (prefix, K('HPHP::kRepoSchemaId').string())
+    return '{0!s}_{1!s}'.format(prefix, K('HPHP::kRepoSchemaId').string())
 
 
 #------------------------------------------------------------------------------
@@ -102,8 +102,8 @@ class RepoShowCommand(gdb.Command):
     @errorwrap
     def invoke(self, args, from_tty):
         global _paths
-        print('Central repo: %s' % '<none>' if _paths[0] is None else _paths[0])
-        print('Local repo: %s'   % '<none>' if _paths[1] is None else _paths[1])
+        print('Central repo: {0!s}'.format('<none>') if _paths[0] is None else _paths[0])
+        print('Local repo: {0!s}'.format('<none>') if _paths[1] is None else _paths[1])
 
 
 class RepoSetCentralCommand(gdb.Command):
@@ -121,7 +121,7 @@ class RepoSetCentralCommand(gdb.Command):
             return
 
         set(V('HPHP::RepoIdCentral'), argv[0])
-        print('Set central repo to %s' % argv[0])
+        print('Set central repo to {0!s}'.format(argv[0]))
 
 
 class RepoSetLocalCommand(gdb.Command):
@@ -139,7 +139,7 @@ class RepoSetLocalCommand(gdb.Command):
             return
 
         set(V('HPHP::RepoIdLocal'), argv[0])
-        print('Set local repo to %s' % argv[0])
+        print('Set local repo to {0!s}'.format(argv[0]))
 
 
 RepoCommand()

@@ -32,7 +32,7 @@ root = home + '/' + os.getenv('FBMAKE_BIN_ROOT', '_bin')
 
 def main():
     if len(sys.argv) < 2:
-        print "%s [Quick|Slow|Zend][<blank>|Repo][VM|Jit|JitIR][-SubSuiteName]" % sys.argv[0]
+        print "{0!s} [Quick|Slow|Zend][<blank>|Repo][VM|Jit|JitIR][-SubSuiteName]".format(sys.argv[0])
         return
 
     arg = sys.argv[1]
@@ -54,14 +54,14 @@ def main():
                         if arg[0] == '-':
                             subpath = '/' + camel_to_slash(arg[1:])
                         else:
-                            raise Exception('Extra? "%s"' % arg)
+                            raise Exception('Extra? "{0!s}"'.format(arg))
 
                     path = relative_path('../test/' + dir + subpath)
                     return [relative_path('../test/run'), path, '-m', vq, repo]
 
-            raise Exception('Unknown mode "%s"' % arg)
+            raise Exception('Unknown mode "{0!s}"'.format(arg))
 
-    raise Exception('Unknown Suite "%s"' % arg)
+    raise Exception('Unknown Suite "{0!s}"'.format(arg))
 
 def camel_to_slash(name):
     s1 = re.sub('(.)([A-Z][a-z]+)', r'\1/\2', name)

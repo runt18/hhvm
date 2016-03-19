@@ -111,7 +111,7 @@ def walk(filename, dest_subdir):
     # We'll only move things we want into 'good'
     shutil.copyfile(filename, full_dest_filename)
 
-    print("Importing %s" % full_dest_filename)
+    print("Importing {0!s}".format(full_dest_filename))
 
 def should_import(filename):
     for bad in no_import:

@@ -46,7 +46,7 @@ def check_results(fnames, out_ext, expect_ext):
     success = all(results)
     total = len(fnames)
     if success:
-        print("All %d tests passed!" % total)
+        print("All {0:d} tests passed!".format(total))
     else:
         failures = list(compress(fnames, map(not_, results)))
         print("Failures:\n" + " ".join(failures))
@@ -59,7 +59,7 @@ def check_results(fnames, out_ext, expect_ext):
                 diff = difflib.ndiff(
                     expected.splitlines(1),
                     actual.splitlines(1))
-                print("Details for the failed test %s:" % f)
+                print("Details for the failed test {0!s}:".format(f))
                 print("\n>>>>>  Expected output  >>>>>>\n")
                 print(expected)
                 print("\n=====   Actual output   ======\n")
@@ -68,7 +68,7 @@ def check_results(fnames, out_ext, expect_ext):
                 print("\n>>>>>       Diff        >>>>>>>\n")
                 print(''.join(diff))
                 print("\n<<<<<     End Diff      <<<<<<<\n")
-        print("Failed %d out of %d tests." % (len(failures), total))
+        print("Failed {0:d} out of {1:d} tests.".format(len(failures), total))
     return success
 
 def get_file_content(fname, ext):
@@ -124,8 +124,8 @@ def list_test_files(root, disabled_ext):
                     disabled_ext))
         return result
     else:
-        raise Exception('Could not find test file or directory at %s' %
-            args.test_path)
+        raise Exception('Could not find test file or directory at {0!s}'.format(
+            args.test_path))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -152,7 +152,7 @@ if __name__ == '__main__':
     dump_on_failure = args.diff
 
     if not os.path.isfile(args.program):
-        raise Exception('Could not find program at %s' % args.program)
+        raise Exception('Could not find program at {0!s}'.format(args.program))
 
     files = list_test_files(args.test_path, args.disabled_extension)
 

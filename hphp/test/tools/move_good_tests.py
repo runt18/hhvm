@@ -115,5 +115,5 @@ if not args.no_move:
     if len(good_tests) == 0:
         print "\nNo good tests found"
     else:
-        print "\nMoving %d tests" % len(good_tests)
+        print "\nMoving {0:d} tests".format(len(good_tests))
         moveTests(good_tests)
