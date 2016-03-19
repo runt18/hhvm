@@ -12,7 +12,7 @@ import unittest
 
 from utils import touch, write_files, proc_call, ensure_output_contains
 
-def write_load_config(repo_dir, saved_state_path, changed_files=[]):
+def write_load_config(repo_dir, saved_state_path, changed_files=None):
     """
     Writes a .hhconfig that allows hh_client to launch hh_server from a saved
     state archive.
@@ -21,6 +21,8 @@ def write_load_config(repo_dir, saved_state_path, changed_files=[]):
     saved_state_path: Path to file containing saved server state
     changed_files: list of strings
     """
+    if changed_files is None:
+        changed_files = []
     with open(os.path.join(repo_dir, 'server_options.sh'), 'w') as f:
         f.write(r"""
 #! /bin/sh
@@ -134,7 +136,9 @@ class TestSaveRestore(unittest.TestCase):
         for p in glob.glob(os.path.join(self.repo_dir, '*')):
             os.remove(p)
 
-    def check_cmd(self, expected_output, stdin=None, options=[]):
+    def check_cmd(self, expected_output, stdin=None, options=None):
+        if options is None:
+            options = []
         root = self.repo_dir + os.path.sep
         output = proc_call([
             self.hh_client,
