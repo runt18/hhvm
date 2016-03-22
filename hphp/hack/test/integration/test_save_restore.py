@@ -26,10 +26,10 @@ def write_load_config(repo_dir, saved_state_path, changed_files=None):
     with open(os.path.join(repo_dir, 'server_options.sh'), 'w') as f:
         f.write(r"""
 #! /bin/sh
-echo %s
-""" % saved_state_path)
+echo {0!s}
+""".format(saved_state_path))
         for fn in changed_files:
-            f.write("echo %s\n" % fn)
+            f.write("echo {0!s}\n".format(fn))
         os.fchmod(f.fileno(), 0o700)
 
     with open(os.path.join(repo_dir, '.hhconfig'), 'w') as f:
@@ -37,8 +37,8 @@ echo %s
         # be passing this command some command-line options
         f.write(r"""
 # some comment
-load_script = %s
-        """ % os.path.join(repo_dir, 'server_options.sh'))
+load_script = {0!s}
+        """.format(os.path.join(repo_dir, 'server_options.sh')))
 
 class TestSaveRestore(unittest.TestCase):
     @classmethod
@@ -162,7 +162,7 @@ class TestSaveRestore(unittest.TestCase):
             state_fn)
         server_proc = self.start_hh_server()
         ensure_output_contains(server_proc.stderr,
-                'Load state found at %s.' % state_fn)
+                'Load state found at {0!s}.'.format(state_fn))
 
         self.check_cmd(self.initial_errors)
         touch(os.path.join(self.repo_dir, 'foo_1.php'))
@@ -419,8 +419,8 @@ echo "$2" >> {out}
         with open(os.path.join(self.repo_dir, '.hhconfig'), 'w') as f:
             f.write(r"""
 # some comment
-load_script = %s
-            """ % os.path.join(self.repo_dir, 'server_options.sh'))
+load_script = {0!s}
+            """.format(os.path.join(self.repo_dir, 'server_options.sh')))
 
         proc_call([
             self.hh_client,

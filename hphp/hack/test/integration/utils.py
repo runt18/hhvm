@@ -46,7 +46,7 @@ def ensure_output_contains(f, s, timeout=5):
     process hangs
     """
     def handler(signo, frame):
-        raise AssertionError('Failed to find %s in output' % s)
+        raise AssertionError('Failed to find {0!s} in output'.format(s))
 
     try:
         signal.signal(signal.SIGALRM, handler)

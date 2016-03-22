@@ -95,10 +95,10 @@ def print_means_and_cis(categories, widest_key):
         mean, interval = None, None
         if len(values) > 1:
             mean, interval = mean_confidence_interval(values)
-            print("%s: %s%.2f +-%.2f" % (key, padding, mean, interval))
+            print("{0!s}: {1!s}{2:.2f} +-{3:.2f}".format(key, padding, mean, interval))
         else:
             mean = arith_mean(values)
-            print("%s: %s%.2f" % (key, padding, mean))
+            print("{0!s}: {1!s}{2:.2f}".format(key, padding, mean))
             sys.stderr.write("Warning: too few samples to calculate confidence"
                              " interval for \"%s\"\n" % key)
 

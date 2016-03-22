@@ -233,7 +233,7 @@ remains where it left off after the previous call.
             instr = HHBC.instr_info(self.bcpos)
             name = HHBC.op_name(self.bcpos.dereference()).string()
 
-            out = "%s+%d: %s" % (str(bcstart), self.bcoff, name)
+            out = "{0!s}+{1:d}: {2!s}".format(str(bcstart), self.bcoff, name)
             for imm in instr['imms']:
                 if type(imm) is str:
                     pass

@@ -115,7 +115,7 @@ def print_results(result_files, out_format):
     geomean = None
     for key in categories:
         scores = [run[1] for run in categories[key]]
-        entries = ["%.2f +- %.2f" % score for score in scores]
+        entries = ["{0:.2f} +- {1:.2f}".format(*score) for score in scores]
         entries.insert(0, key)
         if key == 'Geomean':
             geomean = entries
@@ -133,7 +133,7 @@ def red(text):
     the provided text.
 
     """
-    return '\033[31m%s\033[39m' % text
+    return '\033[31m{0!s}\033[39m'.format(text)
 
 
 def green(text):
@@ -141,7 +141,7 @@ def green(text):
     wrapping the provided text.
 
     """
-    return '\033[32m%s\033[39m' % text
+    return '\033[32m{0!s}\033[39m'.format(text)
 
 
 def bold(out_format, text):
@@ -150,13 +150,13 @@ def bold(out_format, text):
 
     """
     if out_format == 'remarkup':
-        return "**%s**" % text
+        return "**{0!s}**".format(text)
     elif out_format == 'terminal':
-        return "\033[1m%s\033[0m" % text
+        return "\033[1m{0!s}\033[0m".format(text)
     elif out_format == 'json':
         return text
     else:
-        raise RuntimeError("Unknown output format: %s" % out_format)
+        raise RuntimeError("Unknown output format: {0!s}".format(out_format))
 
 
 def faster(out_format, text):
@@ -170,7 +170,7 @@ def faster(out_format, text):
     elif out_format == 'json':
         return text
     else:
-        raise RuntimeError("Unknown output format: %s" % out_format)
+        raise RuntimeError("Unknown output format: {0!s}".format(out_format))
 
 
 def slower(out_format, text):
@@ -184,7 +184,7 @@ def slower(out_format, text):
     elif out_format == 'json':
         return text
     else:
-        raise RuntimeError("Unknown output format: %s" % out_format)
+        raise RuntimeError("Unknown output format: {0!s}".format(out_format))
 
 
 def is_slower(change, lower_is_better):
@@ -211,17 +211,17 @@ def print_comparison_results(result_files, out_format, lower_is_better):
         """
         old_score, old_ci = scores[-2]
         new_score, new_ci = scores[-1]
-        entries = ["%.2f +- %.2f" % score for score in scores]
+        entries = ["{0:.2f} +- {1:.2f}".format(*score) for score in scores]
         entries.insert(0, key)
         if confidence_intervals_overlap(old_score, old_ci, new_score, new_ci):
             entries.append("")
         else:
             change = percent_delta(old_score, new_score)
             if is_slower(change, lower_is_better):
-                change_str = "%.4f%% slower" % (change * 100.0)
+                change_str = "{0:.4f}% slower".format((change * 100.0))
                 entries.append(slower(out_format, change_str))
             else:
-                change_str = "+%.4f%% faster" % (change * 100.0)
+                change_str = "+{0:.4f}% faster".format((change * 100.0))
                 entries.append(faster(out_format, change_str))
         return entries
 

@@ -27,7 +27,7 @@ class Platform(object):
         This function will always be invoked prior to building a branch.
 
         """
-        utils.run_command('arc feature %s' % branch.name)
+        utils.run_command('arc feature {0!s}'.format(branch.name))
 
     def build_branch(self, branch):
         """Builds the specified branch.

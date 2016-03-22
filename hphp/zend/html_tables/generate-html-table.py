@@ -37,16 +37,16 @@ def add_basic_codes(file_name):
 
 def write_table(table_name, table_data):
     table_data.sort()
-    print 'static const entity_doctype_table_t %s {' % table_name
+    print 'static const entity_doctype_table_t {0!s} {{'.format(table_name)
     for code_point, entity in table_data:
-        print '  {%s, "%s"},' % (hex(code_point), entity)
+        print '  {{{0!s}, "{1!s}"}},'.format(hex(code_point), entity)
     print '};'
     print
 
 def write_mapping_table(table_name, table_data):
-    print 'static const charset_table_t %s {' % table_name
+    print 'static const charset_table_t {0!s} {{'.format(table_name)
     for a, b in table_data:
-        print '  {%s, %s},' % (hex(a), hex(b))
+        print '  {{{0!s}, {1!s}}},'.format(hex(a), hex(b))
     print '};'
     print
 
@@ -132,9 +132,9 @@ def read_multicode_table(file_name):
 
 def write_multicode_table(table_name, table_data):
     table_data.sort()
-    print 'static const entity_multicode_table_t %s {' % table_name
+    print 'static const entity_multicode_table_t {0!s} {{'.format(table_name)
     for ((code1, code2), entity) in table_data:
-        print '  {{%s, %s}, "%s"},' % (hex(code1), hex(code2), entity)
+        print '  {{{{{0!s}, {1!s}}}, "{2!s}"}},'.format(hex(code1), hex(code2), entity)
     print '};'
     print
 

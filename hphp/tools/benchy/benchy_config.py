@@ -46,7 +46,7 @@ def _load():
         _load.config['RUNLOG_PATH'] = os.path.join(work_dir, 'runlog')
         _load.config['PERF_PATH'] = os.path.join(work_dir, 'perf')
         _load.config['TMP_PATH'] = os.path.join(work_dir, 'tmp')
-        _load.config['PLATFORM'] = "%s_platform" % tmp['platform']
+        _load.config['PLATFORM'] = "{0!s}_platform".format(tmp['platform'])
     return _load.config
 _load.config = None
 

@@ -62,8 +62,7 @@ def patch(path, patches, explanation):
             if is_parse_error(code):
                 raise ParseException()
             fixme_line = \
-                    "%s/* HH_FIXME[%d]: %s */\n" % \
-                    (whitespace, code, explanation)
+                    "{0!s}/* HH_FIXME[{1:d}]: {2!s} */\n".format(whitespace, code, explanation)
             file_lines.insert(line, fixme_line)
 
     with open(path, 'w') as f:
@@ -88,9 +87,9 @@ def main(args):
             patch(path, patches, explanation)
         except ParseException:
             failures += 1
-            print('Not patching %s as it has parse errors' % path)
+            print('Not patching {0!s} as it has parse errors'.format(path))
 
-    print('Patched %d files with HH_FIXME' % (len(fixmes) - failures))
+    print('Patched {0:d} files with HH_FIXME'.format((len(fixmes) - failures)))
 
     return 0
 

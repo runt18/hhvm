@@ -20,7 +20,7 @@ class Engine(object):
         return bool(self.cmd())
 
     def code(self, file_path):
-        return "require_once('%s');" % file_path
+        return "require_once('{0!s}');".format(file_path)
 
     def execute_file(self, file_path):
         proc = subprocess.Popen([self.cmd(), '-r', self.code(file_path)],

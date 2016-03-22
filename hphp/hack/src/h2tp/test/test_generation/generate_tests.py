@@ -184,9 +184,9 @@ def compute_additional_paths(options):
     )
     options.test_dir = os.path.join(options.code_dir, 'test')
     if options.binary.find("buck-out") < 0:
-        options.gen_file_dir = "%s/test" % options.install_dir
+        options.gen_file_dir = "{0!s}/test".format(options.install_dir)
     else:
-        options.gen_file_dir = "%s/" % options.install_dir
+        options.gen_file_dir = "{0!s}/".format(options.install_dir)
 
     options.gen_file_path = os.path.join(
         options.gen_file_dir,

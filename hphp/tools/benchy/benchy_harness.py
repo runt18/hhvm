@@ -326,7 +326,7 @@ def parse_virtual_machines(raw_vms):
     for raw_vm in raw_vms:
         result = re.match(VirtualMachine.pattern, raw_vm)
         if result is None:
-            raise RuntimeError("Invalid format for VM: %s" % raw_vm)
+            raise RuntimeError("Invalid format for VM: {0!s}".format(raw_vm))
         name = result.group('name')
         opts_path = result.group('opts_path').split(':')[1:]
         env, args = parse_opts(opts_path[:-1])

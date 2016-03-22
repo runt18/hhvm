@@ -71,7 +71,7 @@ def parse_argv(args):
 def gdbprint(val, ty=None):
     if ty is None:
         ty = val.type
-    gdb.execute('print (%s)%s' % (str(ty), str(val)))
+    gdb.execute('print ({0!s}){1!s}'.format(str(ty), str(val)))
 
 
 def plural_suffix(num, suffix='s'):

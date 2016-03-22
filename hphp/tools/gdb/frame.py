@@ -43,7 +43,7 @@ def php_line_number_from_repo(func, pc):
     # Query for the line table.
     c = conn.cursor()
     table = repo.table('UnitLineTable')
-    c.execute('SELECT data FROM %s WHERE unitSn == ?;' % table, (sn,))
+    c.execute('SELECT data FROM {0!s} WHERE unitSn == ?;'.format(table), (sn,))
 
     row = c.fetchone()
     if row is None:
@@ -155,7 +155,7 @@ def create_php(idx, ar, rip='0x????????', pc=None):
         'idx':  idx,
         'sp':   str(ar),
         'rip':  _format_rip(rip),
-        'func': '[PHP] %s()' % func_name,
+        'func': '[PHP] {0!s}()'.format(func_name),
     }
 
     attrs = idxs.atomic_get(func['m_attrs']['m_attrs'])
@@ -240,7 +240,7 @@ def stringify_stacktrace(stacktrace):
 def _format_rip(rip):
     """Hex-ify rip if it's an int-like gdb.Value."""
     try:
-        rip = '0x%08x' % int(str(rip))
+        rip = '0x{0:08x}'.format(int(str(rip)))
     except ValueError:
         rip = str(rip)
 
